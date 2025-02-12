@@ -1,22 +1,24 @@
 package campaign
 
-import "testing"
+import (
+	"github.com/stretchr/testify/assert"
+	"testing"
+)
 
 func TestNewCampaign(t *testing.T) {
+	//arrange organizacao do código
+	assert := assert.New(t)
 	name := "Campaign X"
 	content := "Body"
 	contacts := []string{"edson@gmail.com", "lucas@gmail.com"}
 
+	//action acao
 	campaign := NewCampaign(name, content, contacts)
 
-	if campaign.ID != "2" {
-		t.Errorf("Expected 1")
-	} else if campaign.Name != name {
-		t.Errorf("Expected correct name ")
-	} else if campaign.Content != content {
-		t.Errorf("Expected correct content")
-	} else if len(campaign.Contacts) != len(contacts) {
-		t.Errorf("Expected correct contacts")
-	}
+	// assert
+	assert.Equal(campaign.ID, "2")
+	assert.Equal(campaign.Name, name)
+	assert.Equal(campaign.Content, content)
+	assert.Equal(len(campaign.Contacts), len(contacts))
 
 }
