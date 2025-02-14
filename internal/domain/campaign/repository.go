@@ -1,5 +1,5 @@
 package campaign
 
-type Repository struct {
-	//Save(campaign *Campaign) error
+type Repository interface {
+	Save(campaign *Campaign) error
 }
