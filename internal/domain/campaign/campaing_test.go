@@ -3,9 +3,10 @@ package campaign
 import (
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"time"
 )
 
-func TestNewCampaign(t *testing.T) {
+func Test_NewCampaign_CreateCampaign(t *testing.T) {
 	//arrange organizacao do código
 	assert := assert.New(t)
 	name := "Campaign X"
@@ -16,9 +17,20 @@ func TestNewCampaign(t *testing.T) {
 	campaign := NewCampaign(name, content, contacts)
 
 	// assert
-	assert.Equal(campaign.ID, "2")
 	assert.Equal(campaign.Name, name)
 	assert.Equal(campaign.Content, content)
 	assert.Equal(len(campaign.Contacts), len(contacts))
 
+}
+
+func Test_NewCampaign_CreateOnIsNotNoll(t *testing.T) {
+	assert := assert.New(t)
+	name := "Campaign X"
+	content := "Body"
+	contacts := []string{"edilson@gmail.com", "pucas@gmail.com"}
+	now := time.Now().Add(-time.Minute)
+
+	campaign := NewCampaign(name, content, contacts)
+
+	assert.Greater(campaign.CreatedOn, now)
 }
