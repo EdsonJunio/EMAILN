@@ -19,9 +19,9 @@ func main() {
 			case "required":
 				println(v.StructField() + " is required")
 			case "min":
-				println(v.StructField() + " is required with min" + v.Param())
+				println(v.StructField() + " is required with min " + v.Param())
 			case "max":
-				println(v.StructField() + " is required with max" + v.Param())
+				println(v.StructField() + " is required with max " + v.Param())
 			case "email":
 				println(v.StructField() + " is email" + v.Param())
 			}
