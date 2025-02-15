@@ -2,6 +2,7 @@ package campaign
 
 import (
 	"emailn/internal/contract"
+	"emailn/internal/internalErrors"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -74,6 +75,6 @@ func Test_create_ValidateRepository(t *testing.T) {
 
 	_, err := service.Create(newCampaign)
 
-	assert.Equal("error to save on database", err.Error())
+	assert.True(errors.Is(internalErrors.ErrInternal, err))
 
 }
