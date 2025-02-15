@@ -2,6 +2,7 @@ package campaign
 
 import (
 	"emailn/internal/contract"
+	"emailn/internal/internalErrors"
 )
 
 type Service struct {
@@ -16,10 +17,8 @@ func (s *Service) Create(newCampaign contract.NewCampaign) (string, error) {
 
 	err = s.Repository.Save(campaign)
 	if err != nil {
-		return "", err
+		return "", internalErrors.ErrInternal
 	}
-
-	s.Repository.Save(campaign)
 
 	return campaign.ID, nil
 }
