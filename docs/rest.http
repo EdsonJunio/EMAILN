@@ -1,0 +1,10 @@
+GET http://localhost:3000/json
+
+###
+
+PUT http://localhost:3000/product
+
+{
+    "name": "mouse"
+}
+
