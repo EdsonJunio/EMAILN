@@ -3,6 +3,11 @@ package main
 import (
 	"emailn/internal/contract"
 	"emailn/internal/domain/campaign"
+	"emailn/internal/infrastructure/database"
+	"emailn/internal/internalErrors"
+	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"net/http"
@@ -16,6 +21,10 @@ type Product struct {
 func main() {
 	r := chi.NewRouter()
 	r.Use(myMiddleware)
+	service := campaign.Service{
+		Repository: &database.CampaignRepository{},
+	}
+
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		println("endpoint")
 	})
@@ -27,21 +36,22 @@ func main() {
 		var product Product
 		render.DecodeJSON(r.Body, &product)
 		product.ID = 5
+		json.NewDecoder(r.Body).Decode(&product)
+		fmt.Println(product)
 		render.JSON(w, r, product)
 	})
-
-	service := campaign.Service{}
 	r.Post("/campaigns", func(w http.ResponseWriter, r *http.Request) {
 		var request contract.NewCampaign
-
-		err := render.DecodeJSON(r.Body, &request)
-		if err != nil {
-			println(err)
-		}
-
+		render.DecodeJSON(r.Body, &request)
 		id, err := service.Create(request)
+
 		if err != nil {
-			render.Status(r, 400)
+
+			if errors.Is(err, internalErrors.ErrInternal) {
+				render.Status(r, 500)
+			} else {
+				render.Status(r, 400)
+			}
 			render.JSON(w, r, map[string]string{"error": err.Error()})
 			return
 		}
