@@ -50,7 +50,7 @@ func main() {
 			if errors.Is(err, internalErrors.ErrInternal) {
 				render.Status(r, 500)
 			} else {
-				render.Status(r, 400)
+				render.Status(r, 300)
 			}
 			render.JSON(w, r, map[string]string{"error": err.Error()})
 			return
