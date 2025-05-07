@@ -1,10 +1,10 @@
 package campaign
 
 import (
-	"emailn/internal/internalErrors"
-	"errors"
-	"github.com/rs/xid"
+	internalerrors "emailn/internal/internal-errors"
 	"time"
+
+	"github.com/rs/xid"
 )
 
 type Contact struct {
@@ -20,9 +20,6 @@ type Campaign struct {
 }
 
 func NewCampaign(name string, content string, emails []string) (*Campaign, error) {
-	if len(emails) == 0 {
-		return nil, errors.New("contacts is required min 1")
-	}
 
 	contacts := make([]Contact, len(emails))
 	for index, email := range emails {
@@ -36,7 +33,7 @@ func NewCampaign(name string, content string, emails []string) (*Campaign, error
 		CreatedOn: time.Now(),
 		Contacts:  contacts,
 	}
-	err := internalErrors.ValidateStruct(campaign)
+	err := internalerrors.ValidateStruct(campaign)
 	if err == nil {
 		return campaign, nil
 	}

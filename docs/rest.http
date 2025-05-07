@@ -1,8 +1,12 @@
 POST http://localhost:3000/campaigns
 
 {
-    "name": "mo",
+    "name": "mouse 2",
     "content": "change password",
     "emails": ["edson@gmail.com"]
 
 }
+
+###
+
+GET http://localhost:3000/campaigns
